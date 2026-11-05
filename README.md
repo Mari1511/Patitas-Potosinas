@@ -6,39 +6,75 @@ Patitas Potosinas es una plataforma web de adopción de perros en San Luis Potos
 
 > **Adopta, no compres.** Ninguna adopción tiene costo económico.
 
+La aplicación incluye un **Control de visitas**: un servidor Node.js con Express que cuenta las visitas al sitio y las guarda en Redis. Todo se ejecuta en contenedores con Docker Compose, la imagen se publica en Docker Hub y GitHub Actions valida y publica cada cambio.
+
+| Endpoint | Descripción |
+|----------|-------------|
+| `GET /` | Sitio web de Patitas Potosinas |
+| `GET /health` | Estado de la aplicación (`{"status":"activo"}`) |
+| `GET /api/visitas` | Incrementa y devuelve el contador de visitas guardado en Redis |
+
+Si Redis no está disponible, `/api/visitas` responde con un error controlado (código 503) y la aplicación sigue funcionando.
+
 ---
 
 ## Requisitos
 
-- Un navegador moderno (Chrome, Firefox, Edge o Safari).
-- [Node.js](https://nodejs.org/) (para ejecutar las pruebas y levantar el servidor local).
-- Opcional: extensión **Live Server** de VS Code.
-
-> El sitio usa módulos ES6, por lo que **no funciona abriendo `index.html` con doble clic**; debe servirse desde un servidor local.
+- [Node.js](https://nodejs.org/) 20 o superior y npm.
+- [Docker](https://www.docker.com/) con Docker Compose.
+- Una cuenta de [Docker Hub](https://hub.docker.com/).
+- Git y una cuenta de GitHub.
 
 ---
 
 ## Comandos de ejecución
 
-### Ejecutar el sitio
-
-Desde la carpeta raíz del proyecto:
+### Instalar dependencias y ejecutar las pruebas
 
 ```bash
-npx serve src/public
-```
-
-Después abre en el navegador la dirección que aparece en la terminal (normalmente **http://localhost:3000**).
-
-También puedes usar **Live Server** en VS Code: clic derecho en `src/public/index.html` → **"Open with Live Server"**.
-
-### Ejecutar las pruebas
-
-```bash
+npm install
 npm test
 ```
 
-Verifica que existan los archivos principales y que todos los archivos JavaScript tengan sintaxis válida. Esta misma verificación se ejecuta automáticamente en GitHub Actions con cada `push` o Pull Request a `main`.
+### Ejecutar con Docker (solo la aplicación)
+
+```bash
+docker build -t control-visitas:v1 .
+docker run -d --name visitas-web -p 3000:3000 control-visitas:v1
+```
+
+Abre **http://localhost:3000**. Sin Redis, el contador de visitas muestra un aviso de no disponible.
+
+Para detener y eliminar el contenedor:
+
+```bash
+docker stop visitas-web
+docker rm visitas-web
+```
+
+### Ejecutar con Docker Compose (aplicación + Redis)
+
+```bash
+docker compose up --build -d
+docker compose ps
+docker compose logs
+```
+
+Abre **http://localhost:3000** o **http://localhost:3000/api/visitas**: cada solicitud aumenta el contador.
+
+Para detener los servicios:
+
+```bash
+docker compose down
+```
+
+### Publicar la imagen en Docker Hub
+
+```bash
+docker login
+docker tag control-visitas:v1 USUARIO_DOCKERHUB/control-visitas:v1
+docker push USUARIO_DOCKERHUB/control-visitas:v1
+```
 
 ---
 

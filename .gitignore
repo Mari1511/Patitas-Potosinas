@@ -1,0 +1,8 @@
+node_modules/
+npm-debug.log*
+.env
+.env.*
+*.log
+*.zip
+.DS_Store
+Thumbs.db

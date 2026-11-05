@@ -55,6 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Control de visitas (contador guardado en Redis por el servidor)
+  const visitasEl = $('#visitasCount');
+  if (visitasEl){
+    fetch('/api/visitas')
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.mensaje);
+        visitasEl.textContent = data.visitas;
+      })
+      .catch(() => {
+        visitasEl.closest('p').textContent = 'Contador de visitas no disponible por el momento.';
+      });
+  }
+
   // Router
   window.addEventListener('hashchange', router);
   if (!location.hash) location.hash = '#/';

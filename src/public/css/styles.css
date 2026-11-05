@@ -494,6 +494,12 @@ select.input{cursor:pointer;appearance:none;
   font-weight:800;font-size:.88rem;transition:background .2s;
 }
 .newsletter button:hover{background:var(--primary-dark);}
+.visitas{
+  border-top:1px solid rgba(255,255,255,.1);padding:20px 0;
+  display:flex;align-items:baseline;gap:8px 16px;flex-wrap:wrap;font-size:.9rem;
+}
+.visitas h4{font-family:var(--font-display);font-size:1.05rem;color:#fff;}
+.visitas strong{color:var(--amber);font-size:1.05rem;}
 .footer-bottom{
   border-top:1px solid rgba(255,255,255,.1);padding:24px 0;
   display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.85rem;

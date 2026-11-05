@@ -2,12 +2,13 @@
   "name": "patitas-potosinas",
   "version": "1.0.0",
   "description": "Plataforma web de adopción de perros en San Luis Potosí, México.  \r Conecta perritos rescatados de refugios locales con familias responsables.",
-  "main": "index.js",
+  "main": "src/app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "node test/verificar.js"
+    "test": "node --test test/app.test.js",
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/Mari1511/Patitas-Potosinas/issues"
   },
-  "homepage": "https://github.com/Mari1511/Patitas-Potosinas#readme"
+  "homepage": "https://github.com/Mari1511/Patitas-Potosinas#readme",
+  "dependencies": {
+    "express": "^5.3.0",
+    "redis": "^6.3.1"
+  }
 }
