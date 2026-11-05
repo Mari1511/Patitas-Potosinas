@@ -1,0 +1,25 @@
+# Dependencias (se instalan dentro de la imagen con npm ci)
+node_modules
+npm-debug.log*
+
+# Git y GitHub
+.git
+.gitignore
+.github
+
+# Variables de entorno y secretos
+.env
+.env.*
+
+# Archivos locales que no van en la imagen
+test
+README.md
+Dockerfile
+.dockerignore
+compose.yaml
+.vscode
+.idea
+*.log
+*.zip
+.DS_Store
+Thumbs.db
