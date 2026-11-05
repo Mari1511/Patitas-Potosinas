@@ -60,6 +60,3 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!location.hash) location.hash = '#/';
   router();
 });
-
-error_intencional_para_pipeline ;;;; {
-error_intencional_para_pipeline ;;;; {

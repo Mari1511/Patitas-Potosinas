@@ -16,28 +16,18 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Verificar archivos principales
-        run: |
-          test -f index.html
-          test -f css/styles.css
-          test -f js/app.js
-          test -f js/data.js
-          test -f js/router.js
-          test -f js/utils.js
-          echo "Archivos principales encontrados correctamente."
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
 
-      - name: Verificar sintaxis JavaScript
-        run: |
-          for archivo in $(find js views modals -name "*.js"); do
-            node --check "$archivo"
-          done
-          echo "Sintaxis JavaScript validada correctamente."
+      - name: Verificar archivos y sintaxis JavaScript
+        run: npm test
 
       - name: Crear artefacto del proyecto
         run: |
-          zip -r patitas-potosinas.zip . \
-            -x ".git/*" \
-            -x ".github/*"
+          cd src/public
+          zip -r ../../patitas-potosinas.zip .
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
